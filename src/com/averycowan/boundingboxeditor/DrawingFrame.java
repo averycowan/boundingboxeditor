@@ -27,7 +27,8 @@ public class DrawingFrame extends JFrame {
 
 
     public static final HashMap<String, String> LABEL_NAMES = new HashMap<>();
-    private static void registerLabel(String label){
+
+    private static void registerLabel(String label) {
         String name = label
                 .replace(' ', '_')
                 .replace('/', '_')
@@ -54,7 +55,7 @@ public class DrawingFrame extends JFrame {
     private String image_label = "";
 
     float scale = 1.0f;
-//    private ImageCanvas canvas;
+    //    private ImageCanvas canvas;
     private final ArrayList<BBox> bboxs = new ArrayList<>();
 
     private boolean dragging = false;
@@ -65,7 +66,7 @@ public class DrawingFrame extends JFrame {
     private final JImagePanel background;
     private final JDragPanel foreground;
 
-    private void reset_mouse(){
+    private void reset_mouse() {
         dragging = false;
         mouse_x = 0;
         mouse_y = 0;
@@ -120,7 +121,7 @@ public class DrawingFrame extends JFrame {
             this.frame = frame;
         }
 
-        private void reset(){
+        private void reset() {
             frame.reset_mouse();
         }
 
@@ -160,7 +161,7 @@ public class DrawingFrame extends JFrame {
         }
     }
 
-    public class JImagePanel extends JPanel{
+    public class JImagePanel extends JPanel {
         @Override
         public void paint(Graphics g) {
             super.paint(g);
@@ -169,7 +170,8 @@ public class DrawingFrame extends JFrame {
             }
         }
     }
-    public class JDragPanel extends JPanel{
+
+    public class JDragPanel extends JPanel {
         @Override
         public void paint(Graphics g) {
             super.paint(g);
@@ -194,6 +196,7 @@ public class DrawingFrame extends JFrame {
             }
         }
     }
+
     public DrawingFrame() {
         super();
         setUndecorated(true);
@@ -225,7 +228,7 @@ public class DrawingFrame extends JFrame {
         addMouseListener(draw_listener);
         add(panel);
         setVisible(true);
-        new Timer(1000/60, e -> foreground.repaint()).start();
+        new Timer(1000 / 60, e -> foreground.repaint()).start();
 
     }
 
@@ -295,7 +298,7 @@ public class DrawingFrame extends JFrame {
     }
 
     public void add_bbox(int xmin, int ymin, int xmax, int ymax) {
-        BBox bbox = new BBox((int)(xmin / scale), (int)(ymin / scale), (int)(xmax / scale), (int)(ymax / scale), LABEL_NAMES.get(image_label));
+        BBox bbox = new BBox((int) (xmin / scale), (int) (ymin / scale), (int) (xmax / scale), (int) (ymax / scale), LABEL_NAMES.get(image_label));
         System.out.println("Adding bbox: " + bbox);
         bboxs.add(bbox);
         repaint();
