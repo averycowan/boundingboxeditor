@@ -19,9 +19,9 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class DrawingFrame extends JFrame {
-    public static final String WORK_DIR = System.getProperty("user.home") + "/Pictures/BoundingBoxEditor/";
-    public static final String IMAGE_DIR = WORK_DIR + "images/";
-    public static final String LABEL_DIR = WORK_DIR + "labels/";
+    public static final String WORK_DIR = System.getProperty("user.home") + File.separator + "Pictures" + File.separator + "BoundingBoxEditor" + File.separator;
+    public static final String IMAGE_DIR = WORK_DIR + "images" + File.separator;
+    public static final String LABEL_DIR = WORK_DIR + "labels" + File.separator;
 
     public static final String LABEL_NAMES_FILE = WORK_DIR + "label_names.txt";
 
@@ -55,15 +55,12 @@ public class DrawingFrame extends JFrame {
     private String image_label = "";
 
     float scale = 1.0f;
-    //    private ImageCanvas canvas;
     private final ArrayList<BBox> bboxs = new ArrayList<>();
 
     private boolean dragging = false;
     private int mouse_x = 0;
     private int mouse_y = 0;
 
-    private final JLayeredPane panel;
-    private final JImagePanel background;
     private final JDragPanel foreground;
 
     private void reset_mouse() {
@@ -152,12 +149,10 @@ public class DrawingFrame extends JFrame {
 
         @Override
         public void mouseEntered(MouseEvent e) {
-//            reset();
         }
 
         @Override
         public void mouseExited(MouseEvent e) {
-//            reset();
         }
     }
 
@@ -206,9 +201,9 @@ public class DrawingFrame extends JFrame {
         int width = (int) (screensize.width * 0.9);
         screensize = new Dimension(width, height);
         setSize(screensize);
-        panel = new JLayeredPane();
+        JLayeredPane panel = new JLayeredPane();
         panel.setSize(screensize);
-        background = new JImagePanel();
+        JImagePanel background = new JImagePanel();
         background.setSize(screensize);
         background.setBackground(new Color(0, 0, 0, 127));
         background.setLocation(0, 0);
@@ -216,7 +211,6 @@ public class DrawingFrame extends JFrame {
         panel.add(background, JLayeredPane.DEFAULT_LAYER);
         foreground = new JDragPanel();
         foreground.setSize(screensize);
-//        foreground.setBackground(Color.RED);
         foreground.setOpaque(false);
         foreground.setLocation(0, 0);
         panel.setLayer(foreground, JLayeredPane.DRAG_LAYER);
@@ -251,14 +245,10 @@ public class DrawingFrame extends JFrame {
             System.out.println("Clipboard contents: " + contents);
             if (contents.contains("/"))
                 throw new RuntimeException("Invalid image name, uses '/' " + contents);
-            if (!contents.contains("."))
-                throw new RuntimeException("Invalid image name, no '.' " + contents);
-            if (!contents.contains("jpg"))
-                throw new RuntimeException("Invalid image name, not jpg " + contents);
             if (!contents.contains("+"))
                 throw new RuntimeException("Invalid image name, no '+' " + contents);
             String[] name_parts = contents.split("\\+");
-            if (name_parts.length != 3)
+            if (name_parts.length > 3)
                 throw new RuntimeException("Invalid image name, too many '+' " + contents);
             image_title = name_parts[0];
             image_label = name_parts[1];
